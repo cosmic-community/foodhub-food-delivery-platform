@@ -28,6 +28,17 @@
   .card {
     @apply bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden;
   }
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden;
+  }
+  
+  .mobile-menu {
+    @apply max-h-0 overflow-hidden transition-all duration-300 ease-in-out;
+  }
+  
+  .mobile-menu-open {
+    @apply max-h-96;
+  }
 }
 
 @layer utilities {
