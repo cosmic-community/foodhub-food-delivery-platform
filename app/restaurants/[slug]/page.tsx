@@ -5,7 +5,17 @@ import RestaurantHeader from '@/components/RestaurantHeader'
 import MenuItemCard from '@/components/MenuItemCard'
 import ReviewCard from '@/components/ReviewCard'
 import { notFound } from 'next/navigation'
-// app/restaurants/[slug]/page.tsx
+
+interface PageProps {
+  params: Promise<{ slug: string }>
+}
+
+export default async function RestaurantPage({ params }: PageProps) {
+  const { slug } = await params
+  const restaurant = await getRestaurant(slug) as Restaurant | null
+
+  if (!restaurant) {
+    notFound()
   }
 
   const menuItems = await getMenuItemsByRestaurant(restaurant.id) as MenuItem[]
@@ -25,14 +35,29 @@ import { notFound } from 'next/navigation'
     acc[category].push(item)
     return acc
   }, {} as Record<string, MenuItem[]>)
-// app/restaurants/[slug]/page.tsx
+
   return (
     <div>
       <RestaurantHeader restaurant={restaurant} avgRating={avgRating} reviewCount={reviews.length} />
 
       <div className="container py-12">
-// app/restaurants/[slug]/page.tsx
-              })}
+        {/* Menu Section */}
+        {Object.keys(groupedItems).length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-500 text-lg">No menu items available yet.</p>
+          </div>
+        ) : (
+          <div className="space-y-12">
+            {Object.entries(groupedItems).map(([category, items]) => (
+              <div key={category}>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">{category}</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {items.map((item) => (
+                    <MenuItemCard key={item.id} item={item} />
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         )}
 

@@ -46,7 +46,6 @@ export default function RestaurantHeader({ restaurant, avgRating, reviewCount }:
           <div className="mb-6 md:mb-0">
             <div className="flex items-center space-x-3 mb-2">
               <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
                 {restaurant_name}
               </h1>
               {displayRating > 0 && (
@@ -58,7 +57,7 @@ export default function RestaurantHeader({ restaurant, avgRating, reviewCount }:
                   )}
                 </div>
               )}
-
+            </div>
             {cuisine_type?.value && (
               <p className="text-gray-600 text-lg mb-3">{cuisine_type.value} Cuisine</p>
             )}
