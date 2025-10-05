@@ -91,6 +91,20 @@ export interface Order extends CosmicObject {
   };
 }
 
+// Review type
+export interface Review extends CosmicObject {
+  type: 'reviews';
+  metadata: {
+    restaurant?: Restaurant;
+    reviewer_name: string;
+    reviewer_email?: string;
+    rating: number;
+    comment: string;
+    review_date: string;
+    verified_purchase?: boolean;
+  };
+}
+
 // Type literals for select-dropdown values
 export type OrderStatus = 'pending' | 'confirmed' | 'preparing' | 'ready' | 'picked-up' | 'delivered' | 'cancelled';
 export type MenuCategory = 'appetizers' | 'mains' | 'desserts' | 'drinks' | 'sides';

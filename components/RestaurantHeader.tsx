@@ -1,10 +1,12 @@
 import { Restaurant } from '@/types'
 
 interface Props {
-  restaurant: Restaurant
+  restaurant: Restaurant;
+  avgRating?: number;
+  reviewCount?: number;
 }
 
-export default function RestaurantHeader({ restaurant }: Props) {
+export default function RestaurantHeader({ restaurant, avgRating, reviewCount }: Props) {
   const { metadata } = restaurant
 
   if (!metadata) {
@@ -21,9 +23,10 @@ export default function RestaurantHeader({ restaurant }: Props) {
     delivery_time,
     delivery_fee,
     minimum_order,
-    rating,
     is_open
   } = metadata
+
+  const displayRating = avgRating || metadata.rating || 0
 
   return (
     <div className="bg-white border-b border-gray-200">
@@ -43,15 +46,18 @@ export default function RestaurantHeader({ restaurant }: Props) {
           <div className="mb-6 md:mb-0">
             <div className="flex items-center space-x-3 mb-2">
               <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
                 {restaurant_name}
               </h1>
-              {rating && (
+              {displayRating > 0 && (
                 <div className="flex items-center space-x-1 bg-gray-100 px-3 py-1 rounded-lg">
                   <span className="text-yellow-500">⭐</span>
-                  <span className="font-semibold text-gray-900">{rating}</span>
+                  <span className="font-semibold text-gray-900">{displayRating.toFixed(1)}</span>
+                  {reviewCount !== undefined && reviewCount > 0 && (
+                    <span className="text-gray-500 text-sm ml-1">({reviewCount})</span>
+                  )}
                 </div>
               )}
-            </div>
 
             {cuisine_type?.value && (
               <p className="text-gray-600 text-lg mb-3">{cuisine_type.value} Cuisine</p>

@@ -123,3 +123,30 @@ export async function getOrder(slug: string) {
     throw new Error('Failed to fetch order');
   }
 }
+
+// Fetch reviews by restaurant ID
+export async function getReviewsByRestaurant(restaurantId: string) {
+  try {
+    const response = await cosmic.objects
+      .find({ 
+        type: 'reviews',
+        'metadata.restaurant': restaurantId 
+      })
+      .props(['id', 'title', 'slug', 'metadata'])
+      .depth(1);
+    
+    // Manual sorting by review date (newest first)
+    const reviews = response.objects.sort((a: any, b: any) => {
+      const dateA = new Date(a.metadata?.review_date || '').getTime();
+      const dateB = new Date(b.metadata?.review_date || '').getTime();
+      return dateB - dateA;
+    });
+    
+    return reviews;
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return [];
+    }
+    throw new Error('Failed to fetch reviews');
+  }
+}

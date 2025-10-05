@@ -1,25 +1,20 @@
 // app/restaurants/[slug]/page.tsx
-import { getRestaurant, getMenuItemsByRestaurant } from '@/lib/cosmic'
-import { Restaurant, MenuItem } from '@/types'
+import { getRestaurant, getMenuItemsByRestaurant, getReviewsByRestaurant } from '@/lib/cosmic'
+import { Restaurant, MenuItem, Review } from '@/types'
 import RestaurantHeader from '@/components/RestaurantHeader'
 import MenuItemCard from '@/components/MenuItemCard'
+import ReviewCard from '@/components/ReviewCard'
 import { notFound } from 'next/navigation'
-
-export const revalidate = 60
-
-interface Props {
-  params: Promise<{ slug: string }>
-}
-
-export default async function RestaurantPage({ params }: Props) {
-  const { slug } = await params
-  const restaurant = await getRestaurant(slug) as Restaurant | null
-
-  if (!restaurant) {
-    notFound()
+// app/restaurants/[slug]/page.tsx
   }
 
   const menuItems = await getMenuItemsByRestaurant(restaurant.id) as MenuItem[]
+  const reviews = await getReviewsByRestaurant(restaurant.id) as Review[]
+
+  // Calculate average rating from reviews
+  const avgRating = reviews.length > 0
+    ? reviews.reduce((sum, review) => sum + (review.metadata?.rating || 0), 0) / reviews.length
+    : restaurant.metadata.rating || 0
 
   // Group menu items by category
   const groupedItems = menuItems.reduce((acc, item) => {
@@ -30,49 +25,47 @@ export default async function RestaurantPage({ params }: Props) {
     acc[category].push(item)
     return acc
   }, {} as Record<string, MenuItem[]>)
-
-  const categoryOrder = ['Appetizers', 'Main Courses', 'Sides', 'Desserts', 'Drinks', 'Other']
-
+// app/restaurants/[slug]/page.tsx
   return (
     <div>
-      <RestaurantHeader restaurant={restaurant} />
+      <RestaurantHeader restaurant={restaurant} avgRating={avgRating} reviewCount={reviews.length} />
 
       <div className="container py-12">
-        <h2 className="text-2xl font-bold text-gray-900 mb-8">Menu</h2>
-
-        {menuItems.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-gray-500 text-lg">No menu items available.</p>
-          </div>
-        ) : (
-          <div className="space-y-12">
-            {categoryOrder
-              .filter(categoryKey => {
-                const items = groupedItems[categoryKey]
-                return items && items.length > 0
-              })
-              .map((categoryKey) => {
-                const items = groupedItems[categoryKey]
-                
-                if (!items || items.length === 0) {
-                  return null
-                }
-                
-                return (
-                  <div key={categoryKey}>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                      {categoryKey}
-                    </h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {items.map((item) => (
-                        <MenuItemCard key={item.id} item={item} />
-                      ))}
-                    </div>
-                  </div>
-                )
+// app/restaurants/[slug]/page.tsx
               })}
           </div>
         )}
+
+        {/* Reviews Section */}
+        <div className="mt-16">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-2xl font-bold text-gray-900">
+              Customer Reviews ({reviews.length})
+            </h2>
+            {avgRating > 0 && (
+              <div className="flex items-center space-x-2">
+                <span className="text-3xl font-bold text-gray-900">
+                  {avgRating.toFixed(1)}
+                </span>
+                <div className="flex items-center">
+                  <span className="text-yellow-500 text-2xl">⭐</span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {reviews.length === 0 ? (
+            <div className="text-center py-12 bg-gray-50 rounded-xl">
+              <p className="text-gray-500 text-lg">No reviews yet. Be the first to review!</p>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              {reviews.map((review) => (
+                <ReviewCard key={review.id} review={review} />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )
