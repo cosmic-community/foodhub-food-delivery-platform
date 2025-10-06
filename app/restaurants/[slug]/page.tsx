@@ -4,6 +4,7 @@ import { Restaurant, MenuItem, Review } from '@/types'
 import RestaurantHeader from '@/components/RestaurantHeader'
 import MenuItemCard from '@/components/MenuItemCard'
 import ReviewCard from '@/components/ReviewCard'
+import ReviewForm from '@/components/ReviewForm'
 import { notFound } from 'next/navigation'
 
 interface PageProps {
@@ -77,6 +78,11 @@ export default async function RestaurantPage({ params }: PageProps) {
                 </div>
               </div>
             )}
+          </div>
+
+          {/* Review Submission Form */}
+          <div className="mb-8">
+            <ReviewForm restaurantId={restaurant.id} restaurantName={restaurant.metadata.restaurant_name} />
           </div>
 
           {reviews.length === 0 ? (
