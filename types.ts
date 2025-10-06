@@ -116,7 +116,7 @@ export interface CosmicResponse<T> {
   total: number;
   limit?: number;
   skip?: number;
-// Post type
+}
 export interface Post extends CosmicObject {
   type: 'posts';
   metadata: {

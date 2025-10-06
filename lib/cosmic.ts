@@ -149,7 +149,7 @@ export async function getReviewsByRestaurant(restaurantId: string) {
     }
     throw new Error('Failed to fetch reviews');
   }
-// Fetch all blog posts
+}
 export async function getPosts() {
   try {
     const response = await cosmic.objects
