@@ -16,6 +16,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link 
               href="/" 
@@ -29,6 +30,19 @@ export default function Header() {
             >
               Orders
             </Link>
+            <Link 
+              href="/about" 
+              className="text-gray-600 hover:text-gray-900 font-medium transition-colors"
+            >
+              About
+            </Link>
+            <Link 
+              href="/contact" 
+              className="text-gray-600 hover:text-gray-900 font-medium transition-colors"
+            >
+              Contact
+            </Link>
+          </nav>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -67,6 +81,20 @@ export default function Header() {
               className="block px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium transition-colors rounded-lg"
             >
               Orders
+            </Link>
+            <Link 
+              href="/about"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium transition-colors rounded-lg"
+            >
+              About
+            </Link>
+            <Link 
+              href="/contact"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-gray-900 font-medium transition-colors rounded-lg"
+            >
+              Contact
             </Link>
           </nav>
         </div>
