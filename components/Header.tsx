@@ -43,7 +43,7 @@ export default function Header() {
               Contact
             </Link>
           </nav>
-          </nav>
+// components/Header.tsx
 
           {/* Mobile Menu Button */}
           <button
