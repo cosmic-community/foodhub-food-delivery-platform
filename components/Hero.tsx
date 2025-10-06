@@ -1,6 +1,15 @@
 export default function Hero() {
   return (
-    <div className="bg-gradient-to-br from-primary-500 to-primary-600 text-white">
+      <div className="relative bg-gradient-to-br from-primary-500 to-primary-600 text-white overflow-hidden">
+        <div 
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: 'url(https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=2000&auto=format,compress)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+          }}
+        />
+        <div className="relative container py-16 md:py-24">
       <div className="container py-16 md:py-24">
         <div className="max-w-3xl">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-balance">

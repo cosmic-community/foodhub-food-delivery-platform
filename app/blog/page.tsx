@@ -21,7 +21,16 @@ export default async function BlogPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary to-primary-dark text-white py-20">
+        <section className="relative bg-gradient-to-br from-primary to-primary-dark text-white py-20 overflow-hidden">
+          <div 
+            className="absolute inset-0 opacity-20"
+            style={{
+              backgroundImage: 'url(https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=2000&auto=format,compress)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
+            }}
+          />
+          <div className="relative container">
         <div className="container">
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
