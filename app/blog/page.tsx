@@ -31,17 +31,16 @@ export default async function BlogPage() {
             }}
           />
           <div className="relative container">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              FoodHub Blog
-            </h1>
-            <p className="text-xl text-white/90">
-              Food trends, recipes, delivery tips, and restaurant news delivered fresh to your feed.
-            </p>
+            <div className="max-w-3xl mx-auto text-center">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                FoodHub Blog
+              </h1>
+              <p className="text-xl text-white/90">
+                Food trends, recipes, delivery tips, and restaurant news delivered fresh to your feed.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Blog Content */}
       <section className="py-16">

@@ -23,18 +23,18 @@ export default async function OrdersPage() {
           </div>
         </div>
         <div className="container py-12">
-
-      {orders.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">No orders yet.</p>
+          {orders.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">No orders yet.</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {orders.map((order) => (
+                <OrderCard key={order.id} order={order} />
+              ))}
+            </div>
+          )}
         </div>
-      ) : (
-        <div className="space-y-4">
-          {orders.map((order) => (
-            <OrderCard key={order.id} order={order} />
-          ))}
-        </div>
-      )}
-    </div>
+      </div>
   )
 }

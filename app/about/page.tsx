@@ -19,17 +19,16 @@ export default function AboutPage() {
             }}
           />
           <div className="relative container">
-        <div className="container">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              About FoodHub
-            </h1>
-            <p className="text-xl text-white/90">
-              Connecting you with the best local restaurants and delivering happiness, one meal at a time.
-            </p>
+            <div className="max-w-3xl mx-auto text-center">
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                About FoodHub
+              </h1>
+              <p className="text-xl text-white/90">
+                Connecting you with the best local restaurants and delivering happiness, one meal at a time.
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* Mission Section */}
       <section className="py-16">
