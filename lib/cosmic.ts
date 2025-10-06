@@ -149,4 +149,63 @@ export async function getReviewsByRestaurant(restaurantId: string) {
     }
     throw new Error('Failed to fetch reviews');
   }
+// Fetch all blog posts
+export async function getPosts() {
+  try {
+    const response = await cosmic.objects
+      .find({ type: 'posts' })
+      .props(['id', 'title', 'slug', 'metadata'])
+      .depth(1);
+    
+    // Manual sorting by publish date (newest first)
+    const posts = response.objects.sort((a: any, b: any) => {
+      const dateA = new Date(a.metadata?.publish_date || '').getTime();
+      const dateB = new Date(b.metadata?.publish_date || '').getTime();
+      return dateB - dateA;
+    });
+    
+    return posts;
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return [];
+    }
+    throw new Error('Failed to fetch posts');
+  }
+}
+
+// Fetch single blog post by slug
+export async function getPost(slug: string) {
+  try {
+    const response = await cosmic.objects
+      .findOne({ type: 'posts', slug })
+      .props(['id', 'title', 'slug', 'metadata'])
+      .depth(1);
+    
+    return response.object;
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return null;
+    }
+    throw new Error('Failed to fetch post');
+  }
+}
+
+// Fetch featured blog posts
+export async function getFeaturedPosts() {
+  try {
+    const response = await cosmic.objects
+      .find({ 
+        type: 'posts',
+        'metadata.featured': true 
+      })
+      .props(['id', 'title', 'slug', 'metadata'])
+      .depth(1);
+    
+    return response.objects;
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return [];
+    }
+    throw new Error('Failed to fetch featured posts');
+  }
 }

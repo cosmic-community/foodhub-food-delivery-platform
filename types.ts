@@ -116,4 +116,27 @@ export interface CosmicResponse<T> {
   total: number;
   limit?: number;
   skip?: number;
+// Post type
+export interface Post extends CosmicObject {
+  type: 'posts';
+  metadata: {
+    post_title: string;
+    author_name: string;
+    publish_date: string;
+    featured_image?: {
+      url: string;
+      imgix_url: string;
+    };
+    excerpt: string;
+    content: string;
+    category: {
+      key: string;
+      value: string;
+    };
+    featured?: boolean;
+    reading_time?: number;
+  };
 }
+
+// Blog category type
+export type BlogCategory = 'food-trends' | 'recipes' | 'restaurant-news' | 'delivery-tips' | 'nutrition';
